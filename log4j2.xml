@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+
+    <Properties>
+        <Property name="LOG_PATTERN">%d{yyyy-MM-dd'T'HH:mm:ss.SSSZ} %p %m%n</Property>
+        <Property name="APP_LOG_ROOT">/logs/blog_app</Property>
+    </Properties>
+
+    <!-- Appenders -->
+    <Appenders>
+        <!-- Console Appender -->
+        <Console name="Console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${LOG_PATTERN}" />
+        </Console>
+
+        <!-- Rolling info Appender -->
+        <RollingFile name="infoLog"
+            fileName="${APP_LOG_ROOT}/blog_app_info.log"
+            filePattern="${APP_LOG_ROOT}/blog_app-%d{yyyy-MM-dd}.log">
+            <LevelRangeFilter minLevel="INFO" maxLevel="INFO" onMatch="ACCEPT" onMismatch="DENY" />
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %X{dd.trace_id} %X{dd.span_id} - %m%n" />
+            <Policies>
+                <SizeBasedTriggeringPolicy size="19500KB" />
+            </Policies>
+            <DefaultRolloverStrategy max="10" />
+        </RollingFile>
+
+        <!-- Rolling error Appender -->
+        <RollingFile name="errorLog" fileName="${APP_LOG_ROOT}/blog_app_error.log"
+                     filePattern="${APP_LOG_ROOT}/blog_app-%d{yyyy-MM-dd}.log">
+            <LevelRangeFilter minLevel="ERROR" maxLevel="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %X{dd.trace_id} %X{dd.span_id} - %m%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="19500KB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+        <!-- Rolling debug Appender -->
+        <RollingFile name="debugLog" fileName="${APP_LOG_ROOT}/blog_app_debug.log"
+                     filePattern="${APP_LOG_ROOT}/blog_app-%d{yyyy-MM-dd}.log">
+            <LevelRangeFilter minLevel="DEBUG" maxLevel="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %X{dd.trace_id} %X{dd.span_id} - %m%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="19500KB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+    </Appenders>
+
+    <!-- Loggers -->
+    <Loggers>
+        <!-- Root logger with INFO level -->
+        <Root level="INFO">
+            <AppenderRef ref="Console" />
+        </Root>
+
+        <!-- Logger for your package (com.example) -->
+        <Logger name="com.example.demo" level="INFO" additivity="true">
+            <AppenderRef ref="infoLog" />
+            <AppenderRef ref="errorLog" />
+        </Logger>
+    </Loggers>
+</Configuration> 

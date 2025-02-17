@@ -1,0 +1,10 @@
+# messages.properties
+
+user.name.empty=Name is required.
+user.name.size=Name must be between 2 and 50 characters.
+user.email.empty=Email is required.
+user.email.invalid=Email must be valid.
+user.password.empty=Password is required.
+user.password.size=Password must be at least 8 characters long.
+user.about.empty=About is required.
+user.about.size=About must be less than or equal to 200 characters.
